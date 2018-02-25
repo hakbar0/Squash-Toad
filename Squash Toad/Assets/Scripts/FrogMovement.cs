@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FrogMovement : MonoBehaviour {
-	public Vector3 jumpVector;
+
+	public float jumpSpeedInMps = 5;
+	public float jumpElevationInDegrees = 45;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -12,15 +15,15 @@ public class FrogMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		var projectedJumpVector = Vector3.ProjectOnPlane (jumpVector, Vector3.up);
+		var camera = GetComponentInChildren<Camera> ();
 
-		Debug.DrawRay (transform.position, projectedJumpVector, Color.blue);
+		Debug.DrawRay (transform.position, 	camera.transform.forward, Color.red);
 
-
-		var radiansToRotate = Mathf.Deg2Rad * 90;
-		var rotatedJumpVector = Vector3.RotateTowards (projectedJumpVector, Vector3.up, radiansToRotate, 0 );
-
-		Debug.DrawRay (transform.position, rotatedJumpVector.normalized, Color.blue);
+		var projectedLookDirection = Vector3.ProjectOnPlane (camera.transform.forward, Vector3.up);
+		var radiansToRotate = Mathf.Deg2Rad * jumpElevationInDegrees;
+		var unnormalisedRotatedJumpDirection = Vector3.RotateTowards (projectedLookDirection, Vector3.up, radiansToRotate, 0 );
+		var jumpVector = unnormalisedRotatedJumpDirection.normalized * jumpSpeedInMps;
+		Debug.DrawRay (transform.position, jumpVector, Color.blue);
 
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
