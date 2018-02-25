@@ -8,9 +8,9 @@ public class TreeSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		CreateTree ();
-		CreateTree ();
-		CreateTree ();
+		for (int i = 0; i < Random.Range(2,15); i++) {
+			CreateTree ();
+		}
 	}
 
 	void CreateTree(){
