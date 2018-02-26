@@ -40,6 +40,8 @@ public class FrogMovement : MonoBehaviour {
 			var unnormalisedRotatedJumpDirection = Vector3.RotateTowards (projectedLookDirection, Vector3.up, radiansToRotate, 0 );
 			var jumpVector = unnormalisedRotatedJumpDirection.normalized * jumpSpeedInMps[hopCount];
 			GetComponent<Rigidbody> ().AddForce (jumpVector, ForceMode.VelocityChange);
+
+			hopCount++;
 		}
 	}
 }
