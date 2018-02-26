@@ -10,6 +10,12 @@ public class LevelManager : MonoBehaviour
 	{
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);
 	}
+		
+	public void Replay ()
+	{
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+	}
+
 
 	public void Quit ()
 	{
