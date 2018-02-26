@@ -5,8 +5,8 @@ using UnityEngine;
 public class Spawner : MonoBehaviour {
 
 	public GameObject prefab;
-	public float spawnInterval = 1;
-	public float spawnIntervalMax = 4;
+	public float minTime = 2;
+	public float meanTime = 4;
 	float nextSpawnTime = 0;
 
 	// Use this for initialization
@@ -18,7 +18,8 @@ public class Spawner : MonoBehaviour {
 	void Update () {
 		if (Time.time > nextSpawnTime) {
 			Spawn ();
-			nextSpawnTime = Time.time + Random.Range(spawnInterval, spawnIntervalMax);
+			nextSpawnTime = Time.time + minTime - Mathf.Log (Random.value) * meanTime;
+
 		}
 	}
 	void Spawn(){
