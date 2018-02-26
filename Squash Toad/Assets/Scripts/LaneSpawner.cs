@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class LaneSpawner : MonoBehaviour {
 
-	public GameObject[] lanePrefabs;
+	enum LaneType {Safe, Danger};
+
+	public GameObject[] safelanePrefabs;
+	public GameObject[] dangerouslanePrefabs;
+	LaneType lastLaneType = LaneType.Safe;
 
 	// Use this for initialization
 	void Start () {
@@ -17,12 +21,25 @@ public class LaneSpawner : MonoBehaviour {
 	}
 
 	void CreateRandomLane(float offset) {
-		int laneIndex = Random.Range (0, lanePrefabs.Length);
-		var lane = Instantiate (lanePrefabs [laneIndex]);
+		GameObject lane = null;
+		if (lastLaneType == LaneType.Safe) {
+			lastLaneType = LaneType.Danger;
+			lane = InstiantiateRandomLane (dangerouslanePrefabs);
+		} else {
+			lastLaneType = LaneType.Safe;
+			lane = InstiantiateRandomLane (safelanePrefabs);
+		}
+
 		lane.transform.SetParent(transform, false);
 		lane.transform.Translate (0, 0, offset);
 	}
-	
+
+	GameObject InstiantiateRandomLane(GameObject[] lanes)
+	{
+		int laneIndex = Random.Range (0, lanes.Length);
+		return Instantiate (lanes [laneIndex]);
+
+	}
 	// Update is called once per frame
 	void Update () {
 		
