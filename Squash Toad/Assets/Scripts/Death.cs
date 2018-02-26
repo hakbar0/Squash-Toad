@@ -5,9 +5,11 @@ using UnityEngine;
 public class Death : MonoBehaviour {
 
 	public GameObject UICanvas;
+	public GameObject Reticule;
 
 	public void onDeath(){
-		Debug.Log ("hello");
 		UICanvas.SetActive (true);
+		Reticule.SetActive (true);
+		GetComponent<Rigidbody> ().isKinematic = true;
 	}
 }
